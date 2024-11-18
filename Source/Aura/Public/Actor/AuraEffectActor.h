@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
-class UShapeComponent;
+class USphereComponent;
 UCLASS()
 class AURA_API AAuraEffectActor : public AActor
 {
@@ -25,5 +25,8 @@ protected:
 	TObjectPtr<UStaticMeshComponent> StaticMeshComp;
 
 private:
-	
+	UPROPERTY(EditAnywhere,Category="A_CustomSetting|Attributes")
+	float HealthBuffEffect=0;
+	UPROPERTY(EditAnywhere,Category="A_CustomSetting|Attributes")
+	float ManaBuffEffect=0;
 };

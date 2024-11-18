@@ -31,7 +31,8 @@ void AAuraEffectActor::OnOverlap( UPrimitiveComponent* OverlappedComponent, AAct
 		if(AttributeSet)
 		{
 			UAuraAttributeSet * noconst=const_cast<UAuraAttributeSet * >(AttributeSet);
-			noconst->SetHealth(noconst->GetHealth() +25.f);
+			noconst->SetHealth(noconst->GetHealth()+HealthBuffEffect);
+			noconst->SetMana(noconst->GetMana()+ManaBuffEffect); 
 			Destroy();
 		}
 	}

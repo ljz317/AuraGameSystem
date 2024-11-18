@@ -31,6 +31,6 @@ protected:
 public:
 	//Getter Setter
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	FORCEINLINE UAbilitySystemComponent * GetAbilityComponent()const{return AbilitySystemComponent;} ;
 	FORCEINLINE UAttributeSet * GetAttributeSet()const{return AttributeSet;} ;
+	
 };

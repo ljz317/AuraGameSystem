@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "player/AuraPlayerState.h"
+#include "UI/HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -31,14 +32,29 @@ AAuraCharacter::AAuraCharacter()
 	GetCharacterMovement()->bConstrainToPlane=true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 }
-
-
-
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	InitAbilitysystemsAndAttibuteSet();
+	InitHUDPlayerController();
 	
+	
+	
+}
+void AAuraCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+	InitAbilitysystemsAndAttibuteSet();
+	InitHUDPlayerController();
+}
+void AAuraCharacter::InitHUDPlayerController()
+{
+	APlayerController * PlayerController=Cast<APlayerController>(GetController());
+	if (!PlayerController) return;
+	AAuraHUD * AuraHUD=Cast<AAuraHUD>( PlayerController->GetHUD());
+	if(!AuraHUD)return;
+	AAuraPlayerState* AuraPlayerState=CastChecked<AAuraPlayerState>(GetPlayerState());
+	AuraHUD->InitOverlay(PlayerController,AuraPlayerState,AbilitySystemComponent,AttributeSet);
 }
 void AAuraCharacter::InitAbilitysystemsAndAttibuteSet()
 {
@@ -48,9 +64,4 @@ void AAuraCharacter::InitAbilitysystemsAndAttibuteSet()
 	AbilitySystemComponent=AuraPlayerState->GetAbilitySystemComponent();
 	AbilitySystemComponent->InitAbilityActorInfo(AuraPlayerState,this);
 	AttributeSet=AuraPlayerState->GetAttributeSet();
-}
-void AAuraCharacter::OnRep_PlayerState()
-{
-	Super::OnRep_PlayerState();
-	InitAbilitysystemsAndAttibuteSet();
 }
